@@ -23,6 +23,14 @@ Apache 2.4
 Bootstrap 5
 Docker Compose
 
+🔓 Kullanıcı Bilgileri
+user@example.com:usertest (Burak Aslan)
+
+admin@example.com:admintest
+
+firma@example.com:firmatest (Anadolu Turizm)
+
+
 ⌛ PROJE GELİŞTİRME SÜRECİNDE ⌛
 ---
 Hazırlayan: Burak Aslan
