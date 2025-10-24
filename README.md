@@ -30,4 +30,4 @@ Dosyaları bir statik sunucuda açabilirsiniz. Örn:
   - Firma/Admin panellerindeki CRUD modalları gerçek POST/PUT/DELETE çağrılarına bağlanacak.
 
 ---
-Görev tesliminde bu frontend’i doğrudan `public/` klasörü olarak kullanabilir ya da `php` şablonlarına taşıyabilirsiniz.
+
