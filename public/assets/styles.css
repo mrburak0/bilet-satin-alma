@@ -1,0 +1,23 @@
+:root{
+  --brand: #0d6efd;
+  --bg-grad-start: #0d6efd;
+  --bg-grad-end: #6ea8fe;
+}
+.bg-gradient-primary{
+  background: linear-gradient(135deg, var(--bg-grad-start), var(--bg-grad-end));
+}
+.seat-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 48px);
+  gap: 10px;
+  justify-content: start;
+}
+.seat{
+  width: 48px; height: 48px; border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #f8f9fa; border: 1px solid #dee2e6; cursor: pointer;
+  user-select: none;
+}
+.seat.selected{ outline: 3px solid #0d6efd; }
+.seat.occupied{ background: #e9ecef; color: #adb5bd; pointer-events: none; }
+.card .table{ margin-bottom: 0; }

@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - app-data:/var/www/html/database  
+    restart: unless-stopped
+
+volumes:
+  app-data:
