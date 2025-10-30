@@ -1,4 +1,6 @@
-# 🚌 Bilet Satın Alma Sistemi
+# Bilet Satın Alma Sistemi
+
+Bu proje Siber Vatan Programı Yavuzlar Takımı için hazırlanmıştır. "admin, firma_admin, user" rolleri içeren otobüs bileti satın alma platformu projesidir.
 
 ## Sayfalar
 - `index.html` — Ana sayfa, arama formu, öne çıkan seferler
