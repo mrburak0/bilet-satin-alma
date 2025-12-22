@@ -1,8 +1,6 @@
-# Bilet Satın Alma Platformu — Frontend İskeleti
+# Bilet Satın Alma Sistemi
 
-Bu klasör, görev dokümanındaki sayfa ve yetki mimarisine uygun **statik frontend** iskeletini içerir.
-Bootstrap 5 kullanılmıştır. JavaScript tarafında **demo/mock** verilerle sayfa akışları gösterilir. 
-Backend entegrasyonu yapılınca formlar gerçek API çağrılarına bağlanmalıdır.
+Bu proje Siber Vatan Programı Yavuzlar Takımı için hazırlanmıştır. "admin, firma_admin, user" rolleri içeren otobüs bileti satın alma platformu projesidir.
 
 ## Sayfalar
 - `index.html` — Ana sayfa, arama formu, öne çıkan seferler
@@ -15,19 +13,28 @@ Backend entegrasyonu yapılınca formlar gerçek API çağrılarına bağlanmal�
 - `admin.html` — Admin paneli: firma, firma admini ve global kupon yönetimi (maket)
 - `404.html` — Basit 404 sayfası
 
-## Çalıştırma
-Dosyaları bir statik sunucuda açabilirsiniz. Örn:
-- VS Code Live Server
-- Python: `python -m http.server` (kökte çalıştırın) ve `http://localhost:8000/index.html`
+## 🚀 Kurulum (Docker)
 
-## Notlar
-- **Rol görünümleri** navbar'da `authArea` ile örneklenmiştir. Giriş yaptığınızda "User" rozeti görünür.
-- **Koltuk seçimi**: Dolu koltuklar `occupied` sınıfı ile pasifleştirilir.
-- **Kupon**: `KUPON10`, `SONBAHAR20` demo kodları mevcuttur.
-- Backend sonrası:
-  - Seferler, biletler, kullanıcılar ve kuponlar API'dan yüklenecek.
-  - PDF indirme butonu gerçek dosyayı indirecek.
-  - Firma/Admin panellerindeki CRUD modalları gerçek POST/PUT/DELETE çağrılarına bağlanacak.
+git clone https://github.com/mrburak0/bilet-satin-alma.git
+cd bilet-satin-alma
+docker compose up -d --build
 
+⚙️ Teknolojiler
+PHP 8.3 (PDO + SQLite)
+Apache 2.4
+Bootstrap 5
+Docker Compose
+
+🔓 Kullanıcı Bilgileri
+user@example.com:usertest (Burak Aslan)
+
+admin@example.com:admintest
+
+firma@example.com:firmatest (Anadolu Turizm)
+
+
+⌛ PROJE GELİŞTİRME SÜRECİNDE ⌛
 ---
-Görev tesliminde bu frontend’i doğrudan `public/` klasörü olarak kullanabilir ya da `php` şablonlarına taşıyabilirsiniz.
+Hazırlayan: Burak Aslan
+2025
+
