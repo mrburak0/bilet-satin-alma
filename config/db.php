@@ -1,6 +1,6 @@
 <?php
 $db_path = realpath(__DIR__ . '/../database') . '/database.sqlite';
-error_log("DB PATH = " . $db_path); // GEÇİCİ: sonra silebilirsin
+error_log("DB PATH = " . $db_path);
 try {
     $db = new PDO('sqlite:' . $db_path);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

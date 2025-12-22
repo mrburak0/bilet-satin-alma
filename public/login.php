@@ -1,5 +1,4 @@
 <?php
-// public/login.php  —  UTF-8 (BOM'suz), en başta boşluk yok!
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 require_once __DIR__ . '/includes/functions.php';
@@ -23,14 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'role'    => $u['role'],
       'balance' => (float) ($u['balance'] ?? 0),
     ];
-    header('Location: /index.php'); // veya sadece 'Location: /'
+    header('Location: /index.php'); 
     exit;
   } else {
     $err = 'E-posta veya şifre hatalı.';
   }
 }
 
-// >>> Yalnızca buradan sonra sayfa çıktısı
 $page_title = "Giriş";
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
