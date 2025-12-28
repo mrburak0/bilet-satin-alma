@@ -20,7 +20,6 @@ $sql = "
 ";
 $params = [];
 
-
 if ($from !== '') {
   $sql .= " AND t.departure_city LIKE :from";
   $params[':from'] = "%$from%";
@@ -34,8 +33,7 @@ if ($date !== '') {
   $params[':date'] = $date;
 }
 
-
-if ($from === '' && $to === '' && $date === '') {
+if ($date === '') {
   $sql .= " AND datetime(t.departure_time) >= datetime('now')";
 }
 
