@@ -1,40 +1,107 @@
-# Bilet Satın Alma Sistemi
+Ticket Purchasing System
 
-Bu proje Siber Vatan Programı Yavuzlar Takımı için hazırlanmıştır. "admin, firma_admin, user" rolleri içeren otobüs bileti satın alma platformu projesidir.
+This project is a module-based web application developed as part of the Web Programming and Database Systems & Algorithms courses.
 
-## Sayfalar
-- `index.html` — Ana sayfa, arama formu, öne çıkan seferler
-- `listings.html` — Sefer listeleme ve filtreleme
-- `trip-details.html` — Sefer detayları
-- `purchase.html` — Koltuk seçimi + kupon alanı + özet
-- `tickets.html` — Hesap & Biletlerim (PDF butonu maket)
-- `login.html` / `register.html` — Auth formları (localStorage ile demo)
-- `firmapanel.html` — Firma Admin paneli: sefer ve kupon yönetimi (maket)
-- `admin.html` — Admin paneli: firma, firma admini ve global kupon yönetimi (maket)
-- `404.html` — Basit 404 sayfası
+The system represents a role-based bus ticket purchasing platform that demonstrates backend–frontend interaction, database design, and secure user workflows.
 
-## 🚀 Kurulum (Docker)
+Project Overview
 
+The application allows users to search for bus trips, select seats, apply discount coupons, and manage purchased tickets.
+Administrative roles can manage companies, trips, coupons, and system users.
+
+The project focuses on:
+
+Modular backend architecture
+
+Relational database modeling
+
+Role-based authorization
+
+Secure form handling
+
+Practical use of SQL and algorithms in real-world scenarios
+
+User Roles
+
+User – Searches trips, purchases tickets, manages account and balance
+
+Company Admin – Manages trips and coupons for a specific bus company
+
+Admin – Manages companies, assigns company administrators, and controls global coupons
+
+Pages
+
+index.html — Home page with trip search and featured routes
+
+listings.html — Trip listing and filtering
+
+trip-details.html — Detailed trip information
+
+purchase.html — Seat selection, coupon validation, and purchase summary
+
+tickets.html — Account page and purchased tickets (PDF button is a mockup)
+
+login.html / register.html — Authentication forms (demo logic)
+
+firmapanel.html — Company admin panel (trip & coupon management)
+
+admin.html — System admin panel (company and user management)
+
+404.html — Error handling page
+
+🚀 Installation (Docker)
 git clone https://github.com/mrburak0/bilet-satin-alma.git
 cd bilet-satin-alma
 docker compose up -d --build
 
-⚙️ Teknolojiler
-PHP 8.3 (PDO + SQLite)
+
+The application will be available after the container build process is completed.
+
+⚙️ Technologies Used
+
+PHP 8.3
+
 Apache 2.4
+
+SQLite (PDO)
+
 Bootstrap 5
-Docker Compose
 
-🔓 Kullanıcı Bilgileri
-user@example.com:usertest (Burak Aslan)
+Docker & Docker Compose
 
-admin@example.com:admintest
+🔓 Demo Credentials
+User:
+user@example.com / usertest
 
-firma@example.com:firmatest (Anadolu Turizm)
+Admin:
+admin@example.com / admintest
 
+Company Admin:
+firma@example.com / firmatest
 
-⌛ PROJE GELİŞTİRME SÜRECİNDE ⌛
----
-Hazırlayan: Burak Aslan
-2025
+📘 Academic Scope
 
+This project was developed as a course module project for:
+
+Web Programming
+
+Database Systems & Algorithms
+
+It demonstrates:
+
+SQL-based data manipulation and querying
+
+Algorithmic filtering and validation logic
+
+Secure session-based authentication
+
+CRUD operations with relational integrity
+
+Layered system design suitable for scalable applications
+
+⌛ Project Status
+
+The project is actively maintained and open for further improvements.
+
+Developer: Burak Aslan
+Year: 2025
