@@ -338,7 +338,6 @@ try {
     letter-spacing: .2px;
   }
 
-  /* --- FIX: tables should not look white in dark admin --- */
   .admin-shell .table {
     --bs-table-bg: transparent;
     --bs-table-color: rgba(255, 255, 255, .92);
@@ -349,14 +348,12 @@ try {
     background-color: rgba(13, 110, 253, .08) !important;
   }
 
-  /* tighter inputs inside table */
   .admin-shell .table .form-control,
   .admin-shell .table .form-select {
     padding: .25rem .5rem;
     font-size: .875rem;
   }
 
-  /* keep action area neat */
   .admin-shell .td-actions {
     white-space: nowrap;
   }

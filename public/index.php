@@ -6,7 +6,6 @@ require_once __DIR__ . '/includes/navbar.php';
 <main class="container py-5">
 
   <style>
-    /* MEVCUT STİLLER */
     .hero-wrap {
       max-width: 920px;
       margin-inline: auto;
@@ -60,7 +59,6 @@ require_once __DIR__ . '/includes/navbar.php';
       }
     }
 
-    /* AI BÖLÜMÜ */
     .ai-section {
       background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
       padding: 2rem;
@@ -119,7 +117,6 @@ require_once __DIR__ . '/includes/navbar.php';
       font-weight: 700;
     }
 
-    /* ŞAKACI LOADING OVERLAY */
     .ai-overlay {
       position: fixed;
       inset: 0;
@@ -216,7 +213,6 @@ require_once __DIR__ . '/includes/navbar.php';
     </div>
   </section>
 
-  <!-- AI SECTION -->
   <section class="hero-wrap ai-section">
     <h2 class="hero-title ai-title">✨ AI Travel Assistant</h2>
     <p class="text-muted mb-4">Think of it like, “I'm free from July 16 to December 20.” Just pick the date range, and
@@ -257,7 +253,6 @@ require_once __DIR__ . '/includes/navbar.php';
     <div id="aiResults" class="mt-4"></div>
   </section>
 
-  <!-- Loading Overlay -->
   <div class="ai-overlay" id="aiOverlay">
     <div class="ai-loader-box">
       <div class="ai-flex">
@@ -272,7 +267,6 @@ require_once __DIR__ . '/includes/navbar.php';
   </div>
 
   <script>
-    // --- MEVCUT ŞEHİR LİSTESİ ---
     const cities = [
       "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya",
       "Artvin", "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu",
@@ -288,7 +282,6 @@ require_once __DIR__ . '/includes/navbar.php';
       "Kilis", "Osmaniye", "Düzce"
     ];
 
-    // --- KLASİK AUTOCOMPLETE ---
     function setupAutocomplete(inputId, listId) {
       const input = document.getElementById(inputId);
       const list = document.getElementById(listId);
@@ -342,7 +335,6 @@ require_once __DIR__ . '/includes/navbar.php';
     setupAutocomplete('from', 'fromList');
     setupAutocomplete('to', 'toList');
 
-    // --- ŞAKACI LOADING ---
     const overlay = document.getElementById('aiOverlay');
     const loadingTitle = document.getElementById('aiLoadingTitle');
     const loadingSub = document.getElementById('aiLoadingSub');
@@ -379,7 +371,6 @@ require_once __DIR__ . '/includes/navbar.php';
       }[m]));
     }
 
-    // --- AI FORM ---
     document.getElementById('aiForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -399,7 +390,6 @@ require_once __DIR__ . '/includes/navbar.php';
         return;
       }
 
-      // UI
       btn.disabled = true;
       btn.innerHTML = 'Scanning...';
       showLoading();
@@ -428,7 +418,6 @@ require_once __DIR__ . '/includes/navbar.php';
           const ai = Array.isArray(data.ai) ? data.ai : [];
           const tickets = Array.isArray(data.tickets) ? data.tickets : [];
 
-          // AI Cards
           let html = `<div class="mb-3">
               <h5 class="text-success fw-bold">
                 Recommendations are ready ✅ <span class="text-muted fw-normal">(${esc(start_date)} → ${esc(end_date)})</span>
@@ -458,7 +447,6 @@ require_once __DIR__ . '/includes/navbar.php';
             html += `<div class="alert alert-warning">The AI couldn't generate a city suggestion.</div>`;
           }
 
-          // Tickets
           html += `<div class="mt-4">
               <h5 class="fw-bold">Found Trips</h5>
             </div>`;

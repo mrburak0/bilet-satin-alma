@@ -5,7 +5,7 @@ session_start();
 require_once 'config_ai.php';
 
 error_reporting(E_ALL);
-ini_set('display_errors', '0');   // JSON bozulmasın
+ini_set('display_errors', '0');
 ini_set('log_errors', '1');
 
 function out_json($arr, $code = 200)
@@ -141,7 +141,6 @@ function norm_pair_2($a, $b)
     return implode('|', $n);
 }
 
-/* ===== GEMINI CALL HELPERS ===== */
 function gemini_call($url, $promptText)
 {
     $data = [
@@ -176,15 +175,13 @@ function gemini_call($url, $promptText)
     return [$aiText, null];
 }
 
-/* 1) GEMINI */
 $apiKey = GEMINI_API_KEY;
 if (!$apiKey)
     out_json(['error' => 'Missing GEMINI_API_KEY in config_ai.php'], 500);
 
 $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . $apiKey;
 
-// last pair (session)
-$lastPair = $_SESSION['last_ai_pair'] ?? []; // [city1, city2]
+$lastPair = $_SESSION['last_ai_pair'] ?? [];
 $lastPairText = $lastPair ? implode(", ", $lastPair) : "NONE";
 
 $promptText = "You are a playful travel assistant.
@@ -208,7 +205,6 @@ if ($aiErr)
 
 $geminiCities = extract_cities_from_ai_text($aiText);
 
-// Filtre: Ankara + origin at
 $filtered = [];
 foreach ($geminiCities as $c) {
     $cn = tr_norm($c);
@@ -221,7 +217,6 @@ foreach ($geminiCities as $c) {
 $filtered = unique_keep_order($filtered);
 $pair = array_slice($filtered, 0, 2);
 
-// Eğer 2 şehir yoksa: Gemini’ye 1 kere daha "STRICT" çağrı
 if (count($pair) < 2) {
     $promptText2 = "STRICT MODE:
 Return EXACTLY 2 DIFFERENT Turkish destination cities (not Ankara, not $origin).
@@ -244,16 +239,12 @@ Output only: CITY1, CITY2";
     }
 }
 
-// Eğer hala eksikse: hata dön (havuz yok dedin)
 if (count($pair) < 2) {
     out_json([
         'error' => 'AI could not produce exactly 2 cities. Please try again.',
-        // debug istersen aç:
-        // 'debug_ai_raw' => $aiText
     ], 502);
 }
 
-// Eğer last pair ile birebir aynı geldiyse: 1 kere daha retry
 if ($lastPair && norm_pair_2($pair[0], $pair[1]) === norm_pair_2($lastPair[0], $lastPair[1])) {
     $promptText3 = "ABSOLUTE RULE:
 Do NOT repeat: $lastPairText.
@@ -278,13 +269,10 @@ Output only: CITY1, CITY2";
     }
 }
 
-// session'a kaydet (sadece ikiliyi)
 $_SESSION['last_ai_pair'] = $pair;
 
-// final 3 şehir
 $finalCities = array_merge(['Ankara'], $pair);
 
-// 2) DB: Sadece kalkış + tarih aralığı (varış önemsiz)
 try {
     $stmtAll = $db->prepare("
         SELECT
@@ -324,8 +312,6 @@ try {
         'ai_suggestions' => array_slice($finalCities, 0, 3),
         'ai' => $ai,
         'tickets' => $tickets
-        // debug:
-        // 'debug_ai_raw' => $aiText
     ]);
 
 } catch (Throwable $e) {

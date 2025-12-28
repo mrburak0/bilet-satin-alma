@@ -64,7 +64,6 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $action = $_POST['action'] ?? '';
 
-        /* --- Sefer Oluştur (Trips) --- */
         if ($action === 'trip_create') {
             $departure_city = trim($_POST['departure_city'] ?? '');
             $destination_city = trim($_POST['destination_city'] ?? '');
@@ -265,11 +264,9 @@ try {
         <div class="alert alert-<?= $flash['type'] === 'success' ? 'success' : 'danger' ?>"><?= $h($flash['msg']) ?></div>
     <?php endif; ?>
 
-    <!-- SEFERLER (TRIPS) -->
     <section class="mb-5">
         <h2 class="h5 mb-3">Trip Management</h2>
 
-        <!-- Oluştur -->
         <div class="border rounded p-3 mb-3">
             <form method="post" class="row g-2 align-items-end">
                 <input type="hidden" name="action" value="trip_create">

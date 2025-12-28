@@ -24,9 +24,6 @@ if (!empty($u['company_id'])) {
   $companyName = $st->fetchColumn();
 }
 
-
-
-/* ---- Ensure avatar_path column exists (best-effort) ---- */
 try {
   $cols = $db->query('PRAGMA table_info("User")')->fetchAll(PDO::FETCH_ASSOC);
   $hasAvatar = false;
@@ -42,11 +39,9 @@ try {
 } catch (Throwable $e) {
 }
 
-/* ---- Flash ---- */
 $flashSuccess = get_flash('success');
 $flashError = get_flash('error');
 
-/* ---- Password policy (server-side) ---- */
 function password_policy_validate(string $new, array $userRow): array
 {
   $errors = [];
@@ -89,7 +84,6 @@ function password_policy_validate(string $new, array $userRow): array
   return $errors;
 }
 
-/* ---- Avatar upload (server-side secure JPG/JPEG/PNG) ---- */
 function handle_avatar_upload(PDO $db, string $userId, array $file): array
 {
   if (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
@@ -99,7 +93,6 @@ function handle_avatar_upload(PDO $db, string $userId, array $file): array
     return [false, 'Upload error occurred.'];
   }
 
-  // size limit (2 MB)
   $maxBytes = 2 * 1024 * 1024;
   if (($file['size'] ?? 0) <= 0 || ($file['size'] ?? 0) > $maxBytes) {
     return [false, 'File size must be under 2 MB.'];
@@ -107,7 +100,6 @@ function handle_avatar_upload(PDO $db, string $userId, array $file): array
 
   $tmp = $file['tmp_name'];
 
-  // MIME check
   $finfo = new finfo(FILEINFO_MIME_TYPE);
   $mime = $finfo->file($tmp);
 
@@ -119,7 +111,6 @@ function handle_avatar_upload(PDO $db, string $userId, array $file): array
     return [false, 'Only PNG or JPG/JPEG images are allowed.'];
   }
 
-  // Real image check + type
   $imgInfo = @getimagesize($tmp);
   if (!$imgInfo || empty($imgInfo[2])) {
     return [false, 'Invalid image file.'];
@@ -133,7 +124,6 @@ function handle_avatar_upload(PDO $db, string $userId, array $file): array
     return [false, 'Server image library (GD) is not available.'];
   }
 
-  // Create image from source
   if ($imgType === IMAGETYPE_PNG) {
     $src = @imagecreatefrompng($tmp);
   } else {
@@ -143,7 +133,6 @@ function handle_avatar_upload(PDO $db, string $userId, array $file): array
     return [false, 'Could not process the image.'];
   }
 
-  // Resize (max 512x512)
   $maxW = 512;
   $maxH = 512;
   $w = imagesx($src);
@@ -159,7 +148,6 @@ function handle_avatar_upload(PDO $db, string $userId, array $file): array
 
   $dst = imagecreatetruecolor($newW, $newH);
 
-  // Preserve alpha for PNG, fill white for JPEG
   if ($imgType === IMAGETYPE_PNG) {
     imagealphablending($dst, false);
     imagesavealpha($dst, true);
@@ -181,19 +169,16 @@ function handle_avatar_upload(PDO $db, string $userId, array $file): array
     }
   }
 
-  // Random filename + keep correct extension
   $base = bin2hex(random_bytes(16));
   $ext = ($imgType === IMAGETYPE_PNG) ? 'png' : 'jpg';
   $name = $base . '.' . $ext;
 
   $absPath = $uploadDir . '/' . $name;
 
-  // Re-encode (sanitize)
   $ok = false;
   if ($imgType === IMAGETYPE_PNG) {
     $ok = @imagepng($dst, $absPath, 6);
   } else {
-    // JPEG quality 85
     $ok = @imagejpeg($dst, $absPath, 85);
   }
   imagedestroy($dst);
@@ -204,14 +189,12 @@ function handle_avatar_upload(PDO $db, string $userId, array $file): array
 
   $relPath = 'uploads/avatars/' . $name;
 
-  // Save to DB
   $st = $db->prepare('UPDATE "User" SET avatar_path = ? WHERE id = ?');
   $st->execute([$relPath, $userId]);
 
   return [true, $relPath];
 }
 
-/* ---- Handle POST actions ---- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $action = $_POST['action'] ?? '';
   $u = current_user(true);
@@ -290,15 +273,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-/* ---- Load fresh user and page data ---- */
 $u = current_user(true);
 
-// Balance
 $stBal = $db->prepare('SELECT balance FROM "User" WHERE id = ? LIMIT 1');
 $stBal->execute([$u['id']]);
 $balance = (int) ($stBal->fetchColumn() ?? 0);
 
-// Tickets
 $st = $db->prepare("
 SELECT 
   tk.id,
@@ -438,7 +418,6 @@ if (!empty($u['full_name'])) {
   <?php endif; ?>
 
   <div class="row g-3">
-    <!-- Profile card -->
     <div class="col-12 col-lg-7">
       <div class="acc-card p-3 p-md-4 h-100">
         <div class="d-flex gap-3 align-items-start">
@@ -483,7 +462,6 @@ if (!empty($u['full_name'])) {
             <hr class="my-3">
 
 
-            <!-- Avatar upload -->
             <div class="fw-semibold mb-2">Profile Photo (PNG / JPG / JPEG)</div>
             <form method="post" enctype="multipart/form-data" class="row g-2 align-items-end">
               <input type="hidden" name="action" value="upload_avatar">
@@ -505,7 +483,6 @@ if (!empty($u['full_name'])) {
 
 
 
-    <!-- Security card -->
     <div class="col-12 col-lg-5">
       <div class="acc-card p-3 p-md-4 h-100">
         <div>
@@ -569,7 +546,6 @@ if (!empty($u['full_name'])) {
     </div>
   </div>
 
-  <!-- Tickets -->
   <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mt-4 mb-2">
     <h2 class="h5 m-0">My Tickets</h2>
     <span class="text-muted small"><?= count($rows) ?> ticket(s)</span>
