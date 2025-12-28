@@ -1,15 +1,16 @@
 <?php
 
-if (session_status() === PHP_SESSION_NONE) session_start();
+if (session_status() === PHP_SESSION_NONE)
+  session_start();
 
-require_once __DIR__.'/includes/functions.php';
-require_once __DIR__.'/../config/db.php';
-require_once __DIR__.'/includes/header.php';
-require_once __DIR__.'/includes/navbar.php';
+require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/navbar.php';
 
 $from = trim($_GET['from'] ?? '');
-$to   = trim($_GET['to'] ?? '');
-$date = trim($_GET['date'] ?? ''); 
+$to = trim($_GET['to'] ?? '');
+$date = trim($_GET['date'] ?? '');
 
 $sql = "
   SELECT t.*, bc.name AS company
@@ -46,10 +47,10 @@ $trips = $st->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <main class="container py-4">
-  <h1 class="h4 mb-3">Seferler</h1>
+  <h1 class="h4 mb-3">Trips</h1>
 
   <?php if (!$trips): ?>
-    <div class="alert alert-warning">Sefer bulunamadı.</div>
+    <div class="alert alert-warning">No trips found.</div>
   <?php else: ?>
     <div class="vstack gap-3">
       <?php foreach ($trips as $t): ?>
@@ -64,8 +65,9 @@ $trips = $st->fetchAll(PDO::FETCH_ASSOC);
             <div class="small text-muted"><?= htmlspecialchars($t['company']) ?></div>
           </div>
           <div class="text-end">
-            <div class="fw-bold">₺<?= number_format((int)$t['price'], 0, ',', '.') ?></div>
-            <a class="btn btn-outline-primary btn-sm mt-2" href="trip-details.php?id=<?= htmlspecialchars($t['id']) ?>">Detay</a>
+            <div class="fw-bold">₺<?= number_format((int) $t['price'], 0, ',', '.') ?></div>
+            <a class="btn btn-outline-primary btn-sm mt-2"
+              href="trip-details.php?id=<?= htmlspecialchars($t['id']) ?>">Details</a>
           </div>
         </div>
       <?php endforeach; ?>
@@ -73,4 +75,4 @@ $trips = $st->fetchAll(PDO::FETCH_ASSOC);
   <?php endif; ?>
 </main>
 
-<?php require_once __DIR__.'/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

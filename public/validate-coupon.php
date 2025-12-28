@@ -11,13 +11,17 @@ $code = strtoupper(trim($payload['code'] ?? ''));
 $trip_id = $payload['trip_id'] ?? '';
 
 if ($code === '' || $trip_id === '') {
-  echo json_encode(['valid'=>false, 'message'=>'Eksik veri']); exit;
+  echo json_encode(['valid'=>false, 'message'=>'Missing data']); 
+  exit;
 }
 
 $st = $db->prepare('SELECT price, company_id FROM Trips WHERE id = ? LIMIT 1');
 $st->execute([$trip_id]);
 $trip = $st->fetch(PDO::FETCH_ASSOC);
-if (!$trip) { echo json_encode(['valid'=>false,'message'=>'Sefer bulunamadı']); exit; }
+if (!$trip) { 
+  echo json_encode(['valid'=>false,'message'=>'Trip not found']); 
+  exit; 
+}
 
 $company_id = $trip['company_id'];
 $price = (int)$trip['price'];
@@ -32,10 +36,14 @@ $st = $db->prepare('
 ');
 $st->execute([$code, $company_id]);
 $c = $st->fetch(PDO::FETCH_ASSOC);
-if (!$c) { echo json_encode(['valid'=>false,'message'=>'Kupon bulunamadı veya süresi dolmuş.']); exit; }
+if (!$c) { 
+  echo json_encode(['valid'=>false,'message'=>'Coupon not found or has expired.']); 
+  exit; 
+}
 
 if ($c['usage_limit'] !== null && (int)$c['usage_limit'] <= 0) {
-  echo json_encode(['valid'=>false,'message'=>'Kupon kullanım hakkı dolmuş.']); exit;
+  echo json_encode(['valid'=>false,'message'=>'Coupon usage limit has been reached.']); 
+  exit;
 }
 
 $discount = (float)$c['discount']; 
