@@ -46,7 +46,7 @@ The project focuses on:
 ##  Installation (Docker)
 
 ```bash
-git clone https://github.com/mrburak0/bilet-satin-alma.git
+git clone https://github.com/mrburak0/ticket-purchasing-website.git
 cd bilet-satin-alma
 docker compose up -d --build
 ```
