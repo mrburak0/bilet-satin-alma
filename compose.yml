@@ -6,8 +6,6 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - app-data:/var/www/html/database  
+      - ./database:/var/www/html/database  
     restart: unless-stopped
 
-volumes:
-  app-data:

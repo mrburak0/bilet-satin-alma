@@ -1,0 +1,20 @@
+# Disable script execution in this directory (Apache)
+Options -Indexes -ExecCGI
+
+# Prevent PHP execution
+php_flag engine off
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8
+
+<FilesMatch "\.(php|phtml|php[0-9])$">
+  Deny from all
+</FilesMatch>
+
+# Only allow direct access to images (optional hardening)
+<FilesMatch "\.(png|jpg|jpeg)$">
+  Require all granted
+</FilesMatch>
+
+<FilesMatch ".*">
+  Require all denied
+</FilesMatch>
